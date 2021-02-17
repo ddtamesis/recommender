@@ -12,7 +12,7 @@ import java.util.Random;
  * Class for creating and interacting with a decision tree given a dataset.
  *
  * T is the type of object that we are trying to classify.
- * (like src.Vegetable)
+ * (like sol.Vegetable)
  */
 public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
