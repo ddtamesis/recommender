@@ -20,10 +20,6 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         this.rows = rows;
     }
 
-    public LinkedList<T> getRows() {
-        return this.rows;
-    }
-
     @Override
     public LinkedList<String> getAttributes() {
         return this.attributes;
