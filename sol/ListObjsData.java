@@ -12,12 +12,16 @@ import java.util.LinkedList;
  */
 public class ListObjsData<T extends IAttributeDatum> implements IAttributeDataset<T> {
 
-    LinkedList<String> attributes; // lists names of columns
-    LinkedList<T> rows;
+    public LinkedList<String> attributes; // lists names of columns
+    public LinkedList<T> rows;
 
     public ListObjsData(LinkedList<String> attributes, LinkedList<T> rows) {
         this.attributes = attributes;
         this.rows = rows;
+    }
+
+    public LinkedList<T> getRows() {
+        return this.rows;
     }
 
     @Override
@@ -46,6 +50,28 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         return this.rows.size();
     }
 
+    /*
+    public ListObjsData<T> subsetFilter(String attr) {
+        LinkedList<T> subsetRows = new LinkedList<>();
+        Object firstVal = this.rows.get(0).getValueOf(attr);
+        for (T r : this.rows) {
+            if (r.getValueOf(attr) == firstVal) {
+                subsetRows.addFirst(r);
+                this.rows.remove(r);
+            }
+        }
+        return new ListObjsData<T>(this.attributes, subsetRows);
+    }
+
+    public LinkedList<IAttributeDataset<T>> partition2(String onAttribute) {
+        if (this.rows.isEmpty()) {
+            ...
+        } else {
+            ListObjsData<T> subset = this.subsetFilter(onAttribute);
+            this.partition2(onAttribute).addFirst(subset);
+        }
+    }*/
+
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
         // TODO: Implement.
@@ -62,9 +88,10 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
             if (rValue.equals(row1Value)) {
                 subsetRows1.addFirst(r);
             }
-            
+
             // lists created here disappear after loop closes
         }
+        return null;
     }
 
     @Override
@@ -76,6 +103,18 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
     @Override
     public Object mostCommonValue(String ofAttribute) {
         // TODO: Implement.
-        return null;
+        int longest = 0;
+        IAttributeDataset<T> longestSubset = 
+                new ListObjsData<>(new LinkedList<String>(), new LinkedList<T>());
+        
+        LinkedList<IAttributeDataset<T>> partitionedL = this.partition(ofAttribute);
+        
+        for (IAttributeDataset<T> lod : partitionedL) {
+            if (lod.size() > longest) {
+                longest = lod.size();
+                longestSubset = lod;
+            }
+        }
+        return longestSubset.getSharedValue(ofAttribute);
     }
 }

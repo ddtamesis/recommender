@@ -9,8 +9,11 @@ public class Leaf implements INode {
 
     List<Object> finalValues;
 
-    public Leaf(){}
+    public Leaf(List<Object> finalValues) {
+        this.finalValues = finalValues;
+    }
 
+    /*
     public Object findMostCommonValue(List<Object> finalValues) {
         Object referenceValue = finalValues.get(0);
         for (Object obj: finalValues) {
@@ -20,7 +23,7 @@ public class Leaf implements INode {
         }
         Object mostCommonValue = value1;
         return mostCommonValue;
-    }
+    }*/
 
     @Override
     public Object lookupDecision(IAttributeDatum attrVals) {
