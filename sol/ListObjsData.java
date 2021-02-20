@@ -30,8 +30,8 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         int numSameValues = 0;
         // for loop to check value in each row & increment if matches first value
         Object firstValue = this.rows.get(0).getValueOf(ofAttribute);
-        for (T attributeValue: rows) {
-            if (attributeValue.getValueOf(ofAttribute).equals(firstValue)) {
+        for (T row : this.rows) {
+            if (row.getValueOf(ofAttribute).equals(firstValue)) {
                 numSameValues++;
             }
         } // if all values same down the column, numSameValues will be the same as # of rows
@@ -43,38 +43,39 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
 
     @Override
     public int size() {
-        return this.size();
+        return this.rows.size();
     }
 
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
         // TODO: Implement.
-        return null;
+        LinkedList<IAttributeDataset<T>> listToReturn = new LinkedList<>();
+        LinkedList<T> subsetRows1 = new LinkedList<>();
+        T row1 = this.rows.get(0);
+        subsetRows1.addFirst(row1);
+
+        Object row1Value = row1.getValueOf(onAttribute);
+
+        for (T r : this.rows) {
+            Object rValue = r.getValueOf(onAttribute);
+
+            if (rValue.equals(row1Value)) {
+                subsetRows1.addFirst(r);
+            }
+            
+            // lists created here disappear after loop closes
+        }
     }
 
     @Override
     public Object getSharedValue(String ofAttribute) {
         // TODO: Implement.
-        return rows.get(0).getValueOf(ofAttribute);
+        return this.rows.get(0).getValueOf(ofAttribute);
     }
 
     @Override
     public Object mostCommonValue(String ofAttribute) {
         // TODO: Implement.
-        int numSameValues = 0;
-        int index = 0;
-        Object mostCommonValue = rows.get(index).getValueOf(ofAttribute);
-        // use recursion??
-        while (numSameValues < rows.size()/2) {
-            // for loop to check value in each row & increment if matches first value
-            for (T attributeValue : rows) {
-                if (attributeValue.getValueOf(ofAttribute).equals(mostCommonValue)) {
-                    numSameValues = +1;
-                }
-            }
-        }
-        // if value is all the same down the column,
-        // numSameValues will be the same as the number of row
-        return mostCommonValue;
+        return null;
     }
 }
