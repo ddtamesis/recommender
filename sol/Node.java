@@ -24,11 +24,13 @@ public class Node implements INode {
      */
     @Override
     public Object lookupDecision(IAttributeDatum attrVals) {
-        int counter = 0;
-        if (attrVals == this.actualValue) {
-            return attrVals;
+        Object obj = new Object();
+        for (Edge e: this.values) {
+            if (attrVals.getValueOf(attribute) == e.value) {
+                obj = e.nextNode.lookupDecision(attrVals);
+            }
         }
-        return this.actualValue;
+        return obj;
     }
 
     @Override
