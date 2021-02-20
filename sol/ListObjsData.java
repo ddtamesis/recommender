@@ -29,13 +29,13 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
     public boolean allSameValue(String ofAttribute) {
         int numSameValues = 0;
         // for loop to check value in each row & increment if matches first value
-        Object firstValue = rows.get(0).getValueOf(ofAttribute);
+        Object firstValue = this.rows.get(0).getValueOf(ofAttribute);
         for (T attributeValue: rows) {
             if (attributeValue.getValueOf(ofAttribute).equals(firstValue)) {
                 numSameValues++;
             }
         } // if all values same down the column, numSameValues will be the same as # of rows
-        if (numSameValues == rows.size()) {
+        if (numSameValues == this.rows.size()) {
             return true;
         }
         return false;
