@@ -46,48 +46,28 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         return this.rows.size();
     }
 
-    /*
-    public ListObjsData<T> subsetFilter(String attr) {
-        LinkedList<T> subsetRows = new LinkedList<>();
-        Object firstVal = this.rows.get(0).getValueOf(attr);
-        for (T r : this.rows) {
-            if (r.getValueOf(attr) == firstVal) {
-                subsetRows.addFirst(r);
-                this.rows.remove(r);
-            }
-        }
-        return new ListObjsData<T>(this.attributes, subsetRows);
-    }
-
-    public LinkedList<IAttributeDataset<T>> partition2(String onAttribute) {
-        if (this.rows.isEmpty()) {
-            ...
-        } else {
-            ListObjsData<T> subset = this.subsetFilter(onAttribute);
-            this.partition2(onAttribute).addFirst(subset);
-        }
-    }*/
-
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
-        // TODO: Implement.
         LinkedList<IAttributeDataset<T>> listToReturn = new LinkedList<>();
-        LinkedList<T> subsetRows1 = new LinkedList<>();
-        T row1 = this.rows.get(0);
-        subsetRows1.addFirst(row1);
-
-        Object row1Value = row1.getValueOf(onAttribute);
-
-        for (T r : this.rows) {
-            Object rValue = r.getValueOf(onAttribute);
-
-            if (rValue.equals(row1Value)) {
-                subsetRows1.addFirst(r);
+        LinkedList<Object> evaluatedVals = new LinkedList<>();
+        // remove onAttribute from listToReturn to make sure we don't use it again
+        this.attributes.remove(onAttribute);
+        // nested for loop
+        for (T r1 : rows) {
+            Object r1Value = r1.getValueOf(onAttribute);
+            if (!evaluatedVals.contains(r1Value)) {
+                LinkedList<T> subsetRows = new LinkedList<>();
+                for (T r2 : rows) {
+                    Object r2Value = r2.getValueOf(onAttribute);
+                    if (r1Value.equals(r2Value)) {
+                        subsetRows.addFirst(r1);
+                    }
+                }
+                evaluatedVals.addFirst(r1Value);
+                listToReturn.addFirst(new ListObjsData<T>(this.attributes, subsetRows));
             }
-
-            // lists created here disappear after loop closes
         }
-        return null;
+        return listToReturn;
     }
 
     @Override
@@ -114,3 +94,25 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         return longestSubset.getSharedValue(ofAttribute);
     }
 }
+
+   /*
+    public ListObjsData<T> subsetFilter(String attr) {
+        LinkedList<T> subsetRows = new LinkedList<>();
+        Object firstVal = this.rows.get(0).getValueOf(attr);
+        for (T r : this.rows) {
+            if (r.getValueOf(attr) == firstVal) {
+                subsetRows.addFirst(r);
+                this.rows.remove(r);
+            }
+        }
+        return new ListObjsData<T>(this.attributes, subsetRows);
+    }
+
+    public LinkedList<IAttributeDataset<T>> partition2(String onAttribute) {
+        if (this.rows.isEmpty()) {
+            ...
+        } else {
+            ListObjsData<T> subset = this.subsetFilter(onAttribute);
+            this.partition2(onAttribute).addFirst(subset);
+        }
+    }*/

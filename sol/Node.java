@@ -3,17 +3,17 @@ package sol;
 import src.IAttributeDatum;
 import src.INode;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Node implements INode {
     String attribute;
-    List<Edge> values;
-    Object actualValue; // hm?
+    List<Edge> values = new LinkedList<>(); // calculated later
+    Object defaultValue; // default value, after calculation (mostCommonValue)
 
-    public Node(String attribute, List<Edge> values, Object actualValue) {
+    public Node(String attribute, Object defaultValue) {
         this.attribute = attribute;
-        this.values = values;
-        this.actualValue = actualValue;
+        this.defaultValue = defaultValue;
     }
 
     /*
