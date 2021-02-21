@@ -94,25 +94,3 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         return longestSubset.getSharedValue(ofAttribute);
     }
 }
-
-   /*
-    public ListObjsData<T> subsetFilter(String attr) {
-        LinkedList<T> subsetRows = new LinkedList<>();
-        Object firstVal = this.rows.get(0).getValueOf(attr);
-        for (T r : this.rows) {
-            if (r.getValueOf(attr) == firstVal) {
-                subsetRows.addFirst(r);
-                this.rows.remove(r);
-            }
-        }
-        return new ListObjsData<T>(this.attributes, subsetRows);
-    }
-
-    public LinkedList<IAttributeDataset<T>> partition2(String onAttribute) {
-        if (this.rows.isEmpty()) {
-            ...
-        } else {
-            ListObjsData<T> subset = this.subsetFilter(onAttribute);
-            this.partition2(onAttribute).addFirst(subset);
-        }
-    }*/
