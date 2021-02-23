@@ -10,6 +10,12 @@ public class RecommenderTestSuite {
 
     public RecommenderTestSuite(){}
 
+    public static ListObjsData<Vegetable> makeDataSet(){
+        LinkedList<String> attr = createAttributes();
+        LinkedList<Vegetable> rowOfVegs = createVegetables();
+        return new ListObjsData<>(attr, rowOfVegs);
+    }
+
     public static LinkedList<String> createAttributes() {
         LinkedList<String> attributes = new LinkedList<>();
         String color = "color";
@@ -61,32 +67,24 @@ public class RecommenderTestSuite {
     }
 
     public void testGetAttributes(Tester t) {
-        LinkedList<String> attr = createAttributes();
-        LinkedList<Vegetable> rowOfVegs = createVegetables();
-        ListObjsData<Vegetable> dataSet = new ListObjsData<>(attr, rowOfVegs);
+        ListObjsData<Vegetable> dataSet = makeDataSet();
         LinkedList<String> testAttr = new LinkedList<>(Arrays.asList("color","lowCarb","highFiber","likeToEat"));
         t.checkExpect(dataSet.getAttributes(),testAttr);
     }
 
     public void testAllSameValue(Tester t) {
-        LinkedList<String> attr = createAttributes();
-        LinkedList<Vegetable> rowOfVegs = createVegetables();
-        ListObjsData<Vegetable> dataSet = new ListObjsData<>(attr, rowOfVegs);
+        ListObjsData<Vegetable> dataSet = makeDataSet();
         t.checkExpect(dataSet.allSameValue("color"),true);
         t.checkExpect(dataSet.allSameValue("likeToEat"),false);
     }
 
     public void testSize(Tester t) {
-        LinkedList<String> attr = createAttributes();
-        LinkedList<Vegetable> rowOfVegs = createVegetables();
-        ListObjsData<Vegetable> dataSet = new ListObjsData<>(attr, rowOfVegs);
+        ListObjsData<Vegetable> dataSet = makeDataSet();
         t.checkExpect(dataSet.size(),4);
     }
 
     public void testPartition(Tester t) {
-        LinkedList<String> attr = createAttributes();
-        LinkedList<Vegetable> rowOfVegs = createVegetables();
-        ListObjsData<Vegetable> dataSet = new ListObjsData<>(attr, rowOfVegs);
+        ListObjsData<Vegetable> dataSet = makeDataSet();
 
         LinkedList<String> testAttr = createPartitionedAttributes();
         LinkedList<Vegetable> partition1 = createPartitionedVegs();
@@ -102,16 +100,12 @@ public class RecommenderTestSuite {
     }
 
     public void testGetSharedValue(Tester t) {
-        LinkedList<String> attr = createAttributes();
-        LinkedList<Vegetable> rowOfVegs = createVegetables();
-        ListObjsData<Vegetable>  dataSet = new ListObjsData<>(attr, rowOfVegs);
+        ListObjsData<Vegetable> dataSet = makeDataSet();
         t.checkExpect(dataSet.getSharedValue("color"),"green");
     }
 
     public void testMostCommonValue(Tester t) {
-        LinkedList<String> attr = createAttributes();
-        LinkedList<Vegetable> rowOfVegs = createVegetables();
-        ListObjsData<Vegetable>  dataSet = new ListObjsData<>(attr, rowOfVegs);
+        ListObjsData<Vegetable> dataSet = makeDataSet();
         t.checkExpect(dataSet.mostCommonValue("color"),"green");
         t.checkExpect(dataSet.mostCommonValue("likeToEat"),true);
     }
