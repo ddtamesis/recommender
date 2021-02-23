@@ -23,7 +23,7 @@ public class BiasTest {
      * A method to set up candidate attributes and training data
      */
     public static void setupCandidates() {
-        LinkedList<String> canAttr = new LinkedList<String>();
+        LinkedList<String> canAttr = new LinkedList<>();
         // different attributes to consider similar to the Candidate class
         canAttr.add("gender");
         canAttr.add("leadershipExperience");
@@ -52,7 +52,7 @@ public class BiasTest {
         }
 
         // TODO : Uncomment the following line.
-        // BiasTest.candidates = new ListObjsData<Candidate>(canAttr, allCandidates);
+         BiasTest.candidates = new ListObjsData<Candidate>(canAttr, allCandidates);
     }
 
     /**
