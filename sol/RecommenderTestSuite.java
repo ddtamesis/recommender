@@ -23,6 +23,17 @@ public class RecommenderTestSuite {
         return attributes;
     }
 
+    public static LinkedList<String> createPartitionedAttributes() {
+        LinkedList<String> attributes = new LinkedList<>();
+        String color = "color";
+        String highFiber = "highFiber";
+        String likeToEat = "likeToEat";
+        attributes.addFirst(likeToEat);
+        attributes.addFirst(highFiber);
+        attributes.addFirst(color);
+        return attributes;
+    }
+
     public static LinkedList<Vegetable> createVegetables(){
         Vegetable spinach = new Vegetable("green", true, true, false);
         Vegetable kale = new Vegetable("green", true, true, true);
@@ -43,9 +54,9 @@ public class RecommenderTestSuite {
         Vegetable kale = new Vegetable("green", true, true, true);
         Vegetable lettuce = new Vegetable("green", true, false, true);
         LinkedList<Vegetable> rowsOfVegs = new LinkedList<>();
-        rowsOfVegs.addFirst(spinach);
+        rowsOfVegs.addFirst(lettuce); // why does order need to be switched?
         rowsOfVegs.addFirst(kale);
-        rowsOfVegs.addFirst(lettuce);
+        rowsOfVegs.addFirst(spinach);
         return rowsOfVegs;
     }
 
@@ -63,11 +74,7 @@ public class RecommenderTestSuite {
         ListObjsData<Vegetable> dataSet = new ListObjsData<>(attr, rowOfVegs);
         t.checkExpect(dataSet.allSameValue("color"),true);
         t.checkExpect(dataSet.allSameValue("likeToEat"),false);
-//        Vegetable carrot = new Vegetable("orange", false, false, false);
-//        rowOfVegs.addFirst(carrot);
-//        t.checkExpect(dataSet.allSameValue("color"),true);
     }
-
 
     public void testSize(Tester t) {
         LinkedList<String> attr = createAttributes();
@@ -81,12 +88,13 @@ public class RecommenderTestSuite {
         LinkedList<Vegetable> rowOfVegs = createVegetables();
         ListObjsData<Vegetable> dataSet = new ListObjsData<>(attr, rowOfVegs);
 
+        LinkedList<String> testAttr = createPartitionedAttributes();
         LinkedList<Vegetable> partition1 = createPartitionedVegs();
         LinkedList<Vegetable> partition2 = new LinkedList<>();
         Vegetable peas = new Vegetable("green", false, true, true);
         partition2.addFirst(peas);
-        ListObjsData<Vegetable> testDataSet1 = new ListObjsData<>(attr,partition1);
-        ListObjsData<Vegetable> testDataSet2 = new ListObjsData<>(attr,partition2);
+        ListObjsData<Vegetable> testDataSet1 = new ListObjsData<>(testAttr,partition1);
+        ListObjsData<Vegetable> testDataSet2 = new ListObjsData<>(testAttr,partition2);
         LinkedList<IAttributeDataset<Vegetable>> testPartition = new LinkedList<>();
         testPartition.addFirst(testDataSet1);
         testPartition.addFirst(testDataSet2);

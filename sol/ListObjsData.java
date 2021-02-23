@@ -51,7 +51,7 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         LinkedList<IAttributeDataset<T>> listToReturn = new LinkedList<>();
         LinkedList<Object> evaluatedVals = new LinkedList<>();
         // remove onAttribute from listToReturn to make sure we don't use it again
-        this.attributes.remove(onAttribute);
+        this.attributes.remove(onAttribute); // is it ok to do this.attributes????
         // nested for loop
         for (T r1 : rows) {
             Object r1Value = r1.getValueOf(onAttribute);
@@ -60,7 +60,7 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
                 for (T r2 : rows) {
                     Object r2Value = r2.getValueOf(onAttribute);
                     if (r1Value.equals(r2Value)) {
-                        subsetRows.addFirst(r1);
+                        subsetRows.addFirst(r2);
                     }
                 }
                 evaluatedVals.addFirst(r1Value);
