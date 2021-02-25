@@ -73,7 +73,7 @@ public class RecommenderTestSuite {
         t.checkExpect(carrot.getValueOf("color"), "orange");
         t.checkExpect(spinach.getValueOf("highFiber"), true);
         t.checkException(
-                new RuntimeException("Attribute texture does not exist"
+                new RuntimeException("Attribute texture does not exist "
                         + "in Vegetable class"), carrot, "getValueOf",
                 "texture");
     }

@@ -11,7 +11,8 @@ import java.util.LinkedList;
  *
  * @param <T> - the datum object type that forms the "rows" of the data table
  */
-public class ListObjsData<T extends IAttributeDatum> implements IAttributeDataset<T> {
+public class ListObjsData<T extends IAttributeDatum>
+        implements IAttributeDataset<T> {
 
     public LinkedList<String> attributes;
     public LinkedList<T> rows;
@@ -60,7 +61,13 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
         LinkedList<IAttributeDataset<T>> listToReturn = new LinkedList<>();
         LinkedList<Object> evaluatedVals = new LinkedList<>();
         // remove onAttribute from listToReturn to make sure we don't use it again
-        this.attributes.remove(onAttribute); // is it ok to do this.attributes????
+        LinkedList<String> newAttr = new LinkedList<>();
+        for (String attr : this.getAttributes()) {
+            if (!attr.equals(onAttribute)) {
+                newAttr.addLast(attr);
+            }
+        }
+
         // nested for loop
         for (T r1 : rows) {
             Object r1Value = r1.getValueOf(onAttribute);
@@ -73,7 +80,7 @@ public class ListObjsData<T extends IAttributeDatum> implements IAttributeDatase
                     }
                 }
                 evaluatedVals.addFirst(r1Value);
-                listToReturn.addFirst(new ListObjsData<T>(this.attributes, subsetRows));
+                listToReturn.addFirst(new ListObjsData<T>(newAttr, subsetRows));
             }
         }
         return listToReturn;

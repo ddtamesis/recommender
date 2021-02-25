@@ -28,7 +28,8 @@ public class Vegetable implements IAttributeDatum {
             case "likeToEat":
                 return this.likeToEat;
             default:
-                throw new RuntimeException("Attribute " + attributeName + "does not exist in Vegetable class");
+                throw new RuntimeException("Attribute " +
+                        attributeName + " does not exist in Vegetable class");
         }
     }
 }

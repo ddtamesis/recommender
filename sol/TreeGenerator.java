@@ -16,6 +16,8 @@ import java.util.Random;
  */
 public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
+    public IAttributeDataset<T> dataset;
+
     /**
      * Constructor for this class.
      *
@@ -23,11 +25,22 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
      */
     public TreeGenerator(IAttributeDataset<T> initTrainingData) {
         // TODO: Implement.
+        this.dataset = initTrainingData;
     }
 
     @Override
     public INode buildClassifier(String targetAttr) {
         // TODO: Implement.
+        // should we be trying to optimize this tree,
+        // or just always start from the first attribute in the list?
+
+        LinkedList<String> attrL = this.dataset.getAttributes();
+
+        for (String attr : attrL) {
+            if (!attr.equals(targetAttr)) {
+
+            }
+        }
         return null;
     }
 
