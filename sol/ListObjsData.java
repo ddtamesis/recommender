@@ -5,16 +5,25 @@ import src.IAttributeDatum;
 
 import java.util.LinkedList;
 
-/*
- * Class for a specific representation of rows in a data table. This uses a list
- * of objects (one object per row).
- * The type T is the object that forms the "rows" of the data table
+/**
+ * A class representing a dataset in the form of a data table,
+ * using a list of objects for rows
+ *
+ * @param <T> - the datum object type that forms the "rows" of the data table
  */
 public class ListObjsData<T extends IAttributeDatum> implements IAttributeDataset<T> {
 
-    public LinkedList<String> attributes; // lists names of columns
+    public LinkedList<String> attributes;
     public LinkedList<T> rows;
 
+    /**
+     * Constructor
+     *
+     * @param attributes - a LinkedList of Strings representing the attributes,
+     *                   where each string is a "column" of the dataset
+     * @param rows - a LinkedList representing the rows of the dataset,
+     *             where each element is a "row"
+     */
     public ListObjsData(LinkedList<String> attributes, LinkedList<T> rows) {
         this.attributes = attributes;
         this.rows = rows;

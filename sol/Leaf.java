@@ -3,11 +3,17 @@ package sol;
 import src.IAttributeDatum;
 import src.INode;
 
-
+/**
+ * A class representing a decision leaf of a decision tree that implements INode
+ */
 public class Leaf implements INode {
-
     Object decision;
 
+    /**
+     * Constructor
+     *
+     * @param decision - an Object representing the decision in the leaf
+     */
     public Leaf(Object decision) {
         this.decision = decision;
     }
