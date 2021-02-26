@@ -7,7 +7,7 @@ import src.INode;
  * A class representing a decision leaf of a decision tree that implements INode
  */
 public class Leaf implements INode {
-    Object decision;
+    public Object decision;
 
     /**
      * Constructor

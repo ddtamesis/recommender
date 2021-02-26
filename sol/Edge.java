@@ -6,8 +6,8 @@ import src.INode;
  * A class representing an edge of a node in a decision tree
  */
 public class Edge {
-    Object value;
-    INode nextNode;
+    public Object value;
+    public INode nextNode;
 
     /**
      * Constructor

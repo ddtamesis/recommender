@@ -10,9 +10,10 @@ import java.util.List;
  * A class representing a node of a decision tree that implements INode
  */
 public class Node implements INode {
-    String attribute;
-    LinkedList<Edge> values = new LinkedList<>(); // calculated later
-    Object defaultValue; // default value, after calculation (mostCommonValue)
+    public String attribute;
+    public LinkedList<Edge> values = new LinkedList<>(); // calculated later
+    public Object defaultValue; // default value, after calculation
+    // (mostCommonValue)
 
     /**
      * Constructor
