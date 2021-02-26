@@ -8,11 +8,11 @@ import src.INode;
 import java.util.LinkedList;
 import java.util.Random;
 
-/*
- * Class for creating and interacting with a decision tree given a dataset.
+/**
+ * Class for creating and interacting with a decision tree given a dataset
  *
- * T is the type of object that we are trying to classify.
- * (like sol.Vegetable)
+ * @param <T> - the type of object that we are trying to classify,
+ *           (like sol.Vegetable)
  */
 public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 

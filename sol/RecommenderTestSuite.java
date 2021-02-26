@@ -8,6 +8,9 @@ import tester.Tester;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * A test suite for the methods in IAttributeDatum, IAttributeDataset, and INode
+ */
 public class RecommenderTestSuite {
 
     public RecommenderTestSuite(){}
@@ -207,7 +210,10 @@ public class RecommenderTestSuite {
     }
 
     /**
-     * Tests lookUpDecision method in INode, predicting likeToEat
+     * Tests lookUpDecision method in INode, by testing on a manually-created
+     * tree to predict likeToEat
+     *
+     * The tree is constructed in the following code in order from leaf to root
      *
      * @param t - tester
      */
@@ -258,48 +264,3 @@ public class RecommenderTestSuite {
         Tester.run(new RecommenderTestSuite());
     }
 }
-
-/*
-actual:
- new sol.Node:1(........................
-  this.attribute =  "highFiber"
-  this.values =
-   new java.util.LinkedList:2(){
-    Iterable[0]
-     new sol.Edge:3(
-      this.value = false
-      this.nextNode =
-       new sol.Leaf:4(
-        this.decision = true)),
-    Iterable[1]
-     new sol.Edge:5(
-      this.value = true
-      this.nextNode =
-       new sol.Node:6(
-        this.attribute =  "lowCarb"
-        this.values =
-         new java.util.LinkedList:7(){
-          Iterable[0]
-           new sol.Edge:8(
-            this.value = true
-            this.nextNode =
-             new sol.Node:9(
-              this.attribute =  "color"
-              this.values =
-               new java.util.LinkedList:10(){
-                Iterable[0]
-                 new sol.Edge:11(
-                  this.value =  "green"
-                  this.nextNode =
-                   new sol.Leaf:12(
-                    this.decision = true))}
-              this.defaultValue =  "green")),
-          Iterable[1]
-           new sol.Edge:13(
-            this.value = false
-            this.nextNode =
-             new sol.Leaf:14(
-              this.decision = true))}
-        this.defaultValue = true))}
-  this.defaultValue = true)
- */
