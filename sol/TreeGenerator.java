@@ -17,6 +17,7 @@ import java.util.Random;
 public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
     public IAttributeDataset<T> dataset;
+    public INode root;
 
     /**
      * Constructor for this class.
@@ -25,6 +26,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
      */
     public TreeGenerator(IAttributeDataset<T> initTrainingData) {
         this.dataset = initTrainingData;
+        this.root = null;
     }
 
     @Override
@@ -73,6 +75,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
             }
         }
         nodeToReturn.values = edgeList;
+        this.root = nodeToReturn;
         return nodeToReturn;
     }
 
@@ -85,6 +88,13 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         // in buildClassifier & change this.root if necessary
 
         // check if edges.contains value for particular attribute node comparison
+        if (this.root == null) {
+            throw new RuntimeException("Tree with target attribute has not been"
+                    + " constructed");
+        }
+        else {
+            return this.root.lookupDecision(forVals);
+        }
 
         return null;
     }

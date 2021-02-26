@@ -33,6 +33,9 @@ public class Node implements INode {
             if (attrVals.getValueOf(this.attribute) == e.value) {
                 obj = e.nextNode.lookupDecision(attrVals);
             }
+            else {
+                obj = this.defaultValue; // stops traversing free
+            }
         }
         return obj;
     }

@@ -223,27 +223,37 @@ public class RecommenderTestSuite {
         colorEdges.addFirst(colorEdgeG);
         colorNode.values = colorEdges;
 
-        Node lowCarbNode = new Node("lowCarb", true);
-        LinkedList<Edge> lowCarbEdges = new LinkedList<>();
-        Edge lowCarbEdgeT = new Edge(true, colorNode);
-        Edge lowCarbEdgeF = new Edge(false, new Leaf(true));
-        lowCarbEdges.addFirst(lowCarbEdgeF);
-        lowCarbEdges.addFirst(lowCarbEdgeT);
-        lowCarbNode.values = lowCarbEdges;
+        Node lowCarbNodeT = new Node("lowCarb", true);
+        LinkedList<Edge> lowCarbNodeTEdges = new LinkedList<>();
+        Edge lowCarbNodeTEdgeT = new Edge(true, colorNode);
+        Edge lowCarbNodeTEdgeF = new Edge(false, new Leaf(true));
+        lowCarbNodeTEdges.addFirst(lowCarbNodeTEdgeF);
+        lowCarbNodeTEdges.addFirst(lowCarbNodeTEdgeT);
+        lowCarbNodeT.values = lowCarbNodeTEdges;
+
+        Node lowCarbNodeF = new Node("lowCarb", true);
+        LinkedList<Edge> lowCarbNodeFEdges = new LinkedList<>();
+        Edge lowCarbNodeFEdgeT = new Edge(true, new Leaf(true));
+        Edge lowCarbNodeFEdgeF = new Edge(false, new Leaf(false));
+        lowCarbNodeFEdges.addFirst(lowCarbNodeFEdgeF);
+        lowCarbNodeFEdges.addFirst(lowCarbNodeFEdgeT);
+        lowCarbNodeF.values = lowCarbNodeFEdges;
 
         Node rootNode = new Node("highFiber", true);
-        Edge rootEdgeT = new Edge(true, lowCarbNode);
-        Edge rootEdgeF = new Edge(false, new Leaf(true));
+        Edge rootEdgeT = new Edge(true, lowCarbNodeT);
+        Edge rootEdgeF = new Edge(false, lowCarbNodeF);
         LinkedList<Edge> rootEdges = new LinkedList<>();
         rootEdges.addFirst(rootEdgeF);
         rootEdges.addFirst(rootEdgeT);
         rootNode.values = rootEdges;
 
-        Vegetable corn = new Vegetable("yellow", false, true, true); // how to create object if likeToEat is unknown?
+        Vegetable corn = new Vegetable("yellow", false, true, true);
         Vegetable beets = new Vegetable("purple", false, false, true);
+        Vegetable testVeggie = new Vegetable("red", false, false, true);
 
         t.checkExpect(rootNode.lookupDecision(corn), true);
-        t.checkExpect(rootNode.lookupDecision(beets), true);
+        t.checkExpect(rootNode.lookupDecision(beets), false);
+        t.checkExpect(rootNode.lookupDecision(testVeggie), false);
     }
 
     /**
