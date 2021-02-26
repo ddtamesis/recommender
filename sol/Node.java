@@ -29,16 +29,12 @@ public class Node implements INode {
 
     @Override
     public Object lookupDecision(IAttributeDatum attrVals) {
-        Object obj = new Object();
         for (Edge e: this.values) {
-            if (attrVals.getValueOf(this.attribute) == e.value) {
-                obj = e.nextNode.lookupDecision(attrVals);
-            }
-            else {
-                obj = this.defaultValue; // stops traversing free
+            if (attrVals.getValueOf(this.attribute).equals(e.value)) {
+                return e.nextNode.lookupDecision(attrVals);
             }
         }
-        return obj;
+        return this.defaultValue;
     }
 
     @Override

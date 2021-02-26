@@ -20,12 +20,8 @@ ratios printed out?
 
 
 Cis Female ratio hired: 0.49, 0.49, 0.49,
-<<<<<<< HEAD
-Cis Male ratio hired: 0.49, 0.49, 0.49,
-=======
 Cis Male ratio hired: 0.49, 0.49, 0.49,
 
 Equal:
 Cis Female ratio hired: 0.51, 0.51, 0.51
 Cis Male ratio hired: 0.51, 0.51, 0.51
->>>>>>> d0a5e6a1ec78605c11dd0258606c0c5bd94f714d
