@@ -107,7 +107,9 @@ public class RecommenderTestSuite {
      */
     public void testSize(Tester t) {
         ListObjsData<Vegetable> dataSet = makeDataSet();
-        t.checkExpect(dataSet.size(),4);
+        t.checkExpect(dataSet.size(), 4);
+        dataSet.rows = new LinkedList<>();
+        t.checkExpect(dataSet.size(), 0);
     }
 
     /**
@@ -204,13 +206,6 @@ public class RecommenderTestSuite {
         t.checkExpect(dataSet.mostCommonValue("likeToEat"),true);
     }
 
-    /*
-    public void testBuildClassifier(Tester t){
-        ListObjsData<Vegetable> dataSet = makeDataSet();
-        TreeGenerator<Vegetable> testTree = new TreeGenerator<>(dataSet);
-        t.checkExpect(testTree.buildClassifier("likeToEat"),new Leaf(false));
-    }*/
-
     /**
      * Tests lookUpDecision method in INode, predicting likeToEat
      *
@@ -265,9 +260,9 @@ public class RecommenderTestSuite {
 }
 
 /*
-actual:                                 expected:
- new sol.Node:1(........................ new sol.Leaf:1(
-  this.attribute =  "highFiber"           this.decision = false)
+actual:
+ new sol.Node:1(........................
+  this.attribute =  "highFiber"
   this.values =
    new java.util.LinkedList:2(){
     Iterable[0]

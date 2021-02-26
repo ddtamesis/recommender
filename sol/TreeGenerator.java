@@ -95,8 +95,6 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         else {
             return this.root.lookupDecision(forVals);
         }
-
-        return null;
     }
 
     @Override
