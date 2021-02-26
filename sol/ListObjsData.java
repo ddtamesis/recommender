@@ -2,6 +2,7 @@ package sol;
 
 import src.IAttributeDataset;
 import src.IAttributeDatum;
+import src.INode;
 
 import java.util.LinkedList;
 
@@ -64,7 +65,7 @@ public class ListObjsData<T extends IAttributeDatum>
         LinkedList<String> newAttr = new LinkedList<>();
         for (String attr : this.getAttributes()) {
             if (!attr.equals(onAttribute)) {
-                newAttr.addLast(attr);
+                newAttr.addLast(attr); // change to addFirst & fix tests
             }
         }
 
@@ -109,4 +110,17 @@ public class ListObjsData<T extends IAttributeDatum>
         }
         return longestSubset.getSharedValue(ofAttribute);
     }
+
+    public boolean checkRows() {
+        return this.rows.isEmpty();
+    }
+/*
+    public INode subsetClassifier(String targetAttr) {
+        if (this.rows.isEmpty()) {
+            return new Leaf(this.mostCommonValue(targetAttr));
+        }
+        else if (this.allSameValue(targetAttr)) {
+
+        }
+    }*/
 }

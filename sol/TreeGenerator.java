@@ -25,39 +25,47 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
      * @param initTrainingData - IAttributeDataset of the data table
      */
     public TreeGenerator(IAttributeDataset<T> initTrainingData) {
-        // TODO: Implement.
         this.dataset = initTrainingData;
-        this.root = null;
     }
 
     @Override
     public INode buildClassifier(String targetAttr) {
-        // TODO: Implement.
-        // should we be trying to optimize this tree,
-        // or just always start from the first attribute in the list?
-
-        /*
-        LinkedList<IAttributeDataset<T>> partitionedData =
-                this.dataset.partition(targetAttr);
-
-        for (IAttributeDataset<T> subset : partitionedData) {
-            INode decision = new Leaf(subset.getSharedValue(targetAttr));
-            for (String attr : subset.getAttributes()) {
-
-            }
-        } */
-
         LinkedList<String> attrL = this.dataset.getAttributes();
 
-        for (String attr : attrL) {
-            if (!attr.equals(targetAttr)) {
-                LinkedList<IAttributeDataset<T>> partitionedData =
-                        this.dataset.partition(attr);
+        String nodeAttr = attrL.getFirst();
 
-            }
+        while (nodeAttr.equals(targetAttr)) {
+            Random rand = new Random();
+            int randIndex = rand.nextInt(attrL.size());
+
+            nodeAttr = attrL.get(randIndex);
         }
 
-        return null;
+//        if (nodeAttr.equals(targetAttr)) {
+//            nodeAttr = attrL.get(1);
+//        }
+
+        Node nodeToReturn = new Node(nodeAttr,
+                    this.dataset.mostCommonValue(nodeAttr));
+        LinkedList<IAttributeDataset<T>> partitionRoot =
+                this.dataset.partition(nodeAttr);
+
+        for (IAttributeDataset<T> subset : partitionRoot) {
+            if (subset.size() == 0) {
+                return new Leaf(nodeToReturn.defaultValue);
+            }
+            else if (subset.allSameValue(targetAttr)) {
+                return new Leaf(subset.getSharedValue(targetAttr));
+            }
+            else {
+                Object edgeValue = subset.getSharedValue(nodeAttr);
+                TreeGenerator<T> subtree = new TreeGenerator<T>(subset);
+                Edge edge = new Edge(edgeValue,
+                        subtree.buildClassifier(targetAttr));
+                // we forgot to create the list of edges for the nodeToReturn
+            }
+        }
+        return nodeToReturn;
     }
 
     @Override
@@ -70,5 +78,6 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     @Override
     public void printTree() {
         // TODO: Implement.
+        System.out.println();
     }
 }
