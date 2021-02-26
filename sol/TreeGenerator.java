@@ -43,7 +43,7 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
         }
 
         Node nodeToReturn = new Node(nodeAttr,
-                    this.dataset.mostCommonValue(nodeAttr));
+                    this.dataset.mostCommonValue(targetAttr));
         LinkedList<IAttributeDataset<T>> partitionRoot =
                 this.dataset.partition(nodeAttr);
 
