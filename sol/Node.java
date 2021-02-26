@@ -30,7 +30,7 @@ public class Node implements INode {
     public Object lookupDecision(IAttributeDatum attrVals) {
         Object obj = new Object();
         for (Edge e: this.values) {
-            if (attrVals.getValueOf(attribute) == e.value) {
+            if (attrVals.getValueOf(this.attribute) == e.value) {
                 obj = e.nextNode.lookupDecision(attrVals);
             }
         }
