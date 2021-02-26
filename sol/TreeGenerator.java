@@ -79,7 +79,13 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     @Override
     public Object lookupRecommendation(IAttributeDatum forVals) {
         // TODO: Implement.
-        // just call on top Node of tree
+        // just call lookUpDecision on root Node of tree
+        // add root field to TreeGenerator to call lookUpDecision on rootNode?
+        // put random selection in constructor & check if it equals the targetAttr
+        // in buildClassifier & change this.root if necessary
+
+        // check if edges.contains value for particular attribute node comparison
+
         return null;
     }
 

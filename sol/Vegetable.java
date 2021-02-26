@@ -9,7 +9,7 @@ public class Vegetable implements IAttributeDatum {
     Boolean highFiber;
     Boolean likeToEat;
 
-    public Vegetable(String color, Boolean lowCarb, Boolean highFiber,Boolean likeToEat){
+    public Vegetable(String color, Boolean lowCarb, Boolean highFiber, Boolean likeToEat){
         this.color = color;
         this.lowCarb = lowCarb;
         this.highFiber = highFiber;

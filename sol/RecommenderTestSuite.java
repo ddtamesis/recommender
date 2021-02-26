@@ -1,6 +1,8 @@
 package sol;
 
 import src.IAttributeDataset;
+import src.IAttributeDatum;
+import src.INode;
 import tester.Tester;
 
 import java.util.Arrays;
@@ -80,8 +82,10 @@ public class RecommenderTestSuite {
      */
     public void testGetAttributes(Tester t) {
         ListObjsData<Vegetable> dataSet = makeDataSet();
-        LinkedList<String> testAttr = new LinkedList<>(Arrays.asList("color","lowCarb","highFiber","likeToEat"));
-        // what is Arrays.asList? I've never seen this--is it smth we're allowed to use if we never did in class?
+        LinkedList<String> testAttr = new LinkedList<>(Arrays.asList("color",
+                "lowCarb", "highFiber", "likeToEat"));
+        // what is Arrays.asList? I've never seen this--is it smth we're
+        // allowed to use if we never did in class?
         t.checkExpect(dataSet.getAttributes(), testAttr);
     }
 
@@ -200,13 +204,47 @@ public class RecommenderTestSuite {
         t.checkExpect(dataSet.mostCommonValue("likeToEat"),true);
     }
 
+    /*
     public void testBuildClassifier(Tester t){
         ListObjsData<Vegetable> dataSet = makeDataSet();
         TreeGenerator<Vegetable> testTree = new TreeGenerator<>(dataSet);
         t.checkExpect(testTree.buildClassifier("likeToEat"),new Leaf(false));
-    }
+    }*/
 
-    public void test
+    /**
+     * Tests lookUpDecision method in INode, predicting likeToEat
+     *
+     * @param t - tester
+     */
+    public void testLookUpDecision(Tester t) {
+        Node colorNode = new Node("color", "green");
+        LinkedList<Edge> colorEdges = new LinkedList<>();
+        Edge colorEdgeG = new Edge("green", new Leaf(true));
+        colorEdges.addFirst(colorEdgeG);
+        colorNode.values = colorEdges;
+
+        Node lowCarbNode = new Node("lowCarb", true);
+        LinkedList<Edge> lowCarbEdges = new LinkedList<>();
+        Edge lowCarbEdgeT = new Edge(true, colorNode);
+        Edge lowCarbEdgeF = new Edge(false, new Leaf(true));
+        lowCarbEdges.addFirst(lowCarbEdgeF);
+        lowCarbEdges.addFirst(lowCarbEdgeT);
+        lowCarbNode.values = lowCarbEdges;
+
+        Node rootNode = new Node("highFiber", true);
+        Edge rootEdgeT = new Edge(true, lowCarbNode);
+        Edge rootEdgeF = new Edge(false, new Leaf(true));
+        LinkedList<Edge> rootEdges = new LinkedList<>();
+        rootEdges.addFirst(rootEdgeF);
+        rootEdges.addFirst(rootEdgeT);
+        rootNode.values = rootEdges;
+
+        Vegetable corn = new Vegetable("yellow", false, true, true); // how to create object if likeToEat is unknown?
+        Vegetable beets = new Vegetable("purple", false, false, true);
+
+        t.checkExpect(rootNode.lookupDecision(corn), true);
+        t.checkExpect(rootNode.lookupDecision(beets), true);
+    }
 
     /**
      * main method
@@ -215,3 +253,48 @@ public class RecommenderTestSuite {
         Tester.run(new RecommenderTestSuite());
     }
 }
+
+/*
+actual:                                 expected:
+ new sol.Node:1(........................ new sol.Leaf:1(
+  this.attribute =  "highFiber"           this.decision = false)
+  this.values =
+   new java.util.LinkedList:2(){
+    Iterable[0]
+     new sol.Edge:3(
+      this.value = false
+      this.nextNode =
+       new sol.Leaf:4(
+        this.decision = true)),
+    Iterable[1]
+     new sol.Edge:5(
+      this.value = true
+      this.nextNode =
+       new sol.Node:6(
+        this.attribute =  "lowCarb"
+        this.values =
+         new java.util.LinkedList:7(){
+          Iterable[0]
+           new sol.Edge:8(
+            this.value = true
+            this.nextNode =
+             new sol.Node:9(
+              this.attribute =  "color"
+              this.values =
+               new java.util.LinkedList:10(){
+                Iterable[0]
+                 new sol.Edge:11(
+                  this.value =  "green"
+                  this.nextNode =
+                   new sol.Leaf:12(
+                    this.decision = true))}
+              this.defaultValue =  "green")),
+          Iterable[1]
+           new sol.Edge:13(
+            this.value = false
+            this.nextNode =
+             new sol.Leaf:14(
+              this.decision = true))}
+        this.defaultValue = true))}
+  this.defaultValue = true)
+ */
