@@ -17,15 +17,10 @@ public class RecommenderTestSuite {
      */
     public static LinkedList<String> createAttributes() {
         LinkedList<String> attributes = new LinkedList<>();
-        String color = "color";
-        String lowCarb = "lowCarb";
-        String highFiber = "highFiber";
-        String likeToEat = "likeToEat";
-        // i feel like we don't need to create variables for these strings
-        attributes.addFirst(likeToEat);
-        attributes.addFirst(highFiber);
-        attributes.addFirst(lowCarb);
-        attributes.addFirst(color);
+        attributes.addFirst("likeToEat");
+        attributes.addFirst("highFiber");
+        attributes.addFirst("lowCarb");
+        attributes.addFirst("color");
         return attributes;
     }
 
@@ -119,12 +114,9 @@ public class RecommenderTestSuite {
      */
     public static LinkedList<String> createPartitionedAttributes() {
         LinkedList<String> attributes = new LinkedList<>();
-        String color = "color";
-        String highFiber = "highFiber";
-        String likeToEat = "likeToEat";
-        attributes.addFirst(likeToEat);
-        attributes.addFirst(highFiber);
-        attributes.addFirst(color);
+        attributes.addFirst("color");
+        attributes.addFirst("highFiber");
+        attributes.addFirst("likeToEat");
         return attributes;
     }
 
@@ -142,10 +134,7 @@ public class RecommenderTestSuite {
         Vegetable lettuce = new Vegetable("green", true,
                 false, true);
         LinkedList<Vegetable> rowsOfVegs = new LinkedList<>();
-        rowsOfVegs.addFirst(lettuce); // why does order need to be switched?
-        // b/c partition does addFirst each time it encounters the matching attr
-        // to add to the subset going thru the list (instead of addLast)
-        // so the order is reversed
+        rowsOfVegs.addFirst(lettuce);
         rowsOfVegs.addFirst(kale);
         rowsOfVegs.addFirst(spinach);
         return rowsOfVegs;
@@ -198,7 +187,6 @@ public class RecommenderTestSuite {
         t.checkExpect(
                 partitionedDataset.get(1).getSharedValue("likeToEat"),
                 true);
-
     }
 
     /**
@@ -211,6 +199,14 @@ public class RecommenderTestSuite {
         t.checkExpect(dataSet.mostCommonValue("color"),"green");
         t.checkExpect(dataSet.mostCommonValue("likeToEat"),true);
     }
+
+    public void testBuildClassifier(Tester t){
+        ListObjsData<Vegetable> dataSet = makeDataSet();
+        TreeGenerator<Vegetable> testTree = new TreeGenerator<>(dataSet);
+        t.checkExpect(testTree.buildClassifier("likeToEat"),new Leaf(false));
+    }
+
+    public void test
 
     /**
      * main method

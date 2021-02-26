@@ -17,7 +17,6 @@ import java.util.Random;
 public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
 
     public IAttributeDataset<T> dataset;
-    public INode root;
 
     /**
      * Constructor for this class.
@@ -32,39 +31,48 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     public INode buildClassifier(String targetAttr) {
         LinkedList<String> attrL = this.dataset.getAttributes();
 
-        String nodeAttr = attrL.getFirst();
+        String nodeAttr = null;
 
-        while (nodeAttr.equals(targetAttr)) {
+        while (nodeAttr == null || nodeAttr.equals(targetAttr)) {
             Random rand = new Random();
             int randIndex = rand.nextInt(attrL.size());
 
             nodeAttr = attrL.get(randIndex);
         }
 
-//        if (nodeAttr.equals(targetAttr)) {
-//            nodeAttr = attrL.get(1);
-//        }
-
         Node nodeToReturn = new Node(nodeAttr,
                     this.dataset.mostCommonValue(nodeAttr));
         LinkedList<IAttributeDataset<T>> partitionRoot =
                 this.dataset.partition(nodeAttr);
 
+        LinkedList<Edge> edgeList = new LinkedList<>();
+
         for (IAttributeDataset<T> subset : partitionRoot) {
+            Object edgeValue = subset.getSharedValue(nodeAttr);
             if (subset.size() == 0) {
-                return new Leaf(nodeToReturn.defaultValue);
+                Edge edge = new Edge(edgeValue,
+                        new Leaf(nodeToReturn.defaultValue));
+                edgeList.addFirst(edge);
             }
             else if (subset.allSameValue(targetAttr)) {
-                return new Leaf(subset.getSharedValue(targetAttr));
+                Edge edge = new Edge(edgeValue,
+                        new Leaf(subset.getSharedValue(targetAttr)));
+                edgeList.addFirst(edge);
             }
             else {
-                Object edgeValue = subset.getSharedValue(nodeAttr);
-                TreeGenerator<T> subtree = new TreeGenerator<T>(subset);
-                Edge edge = new Edge(edgeValue,
-                        subtree.buildClassifier(targetAttr));
-                // we forgot to create the list of edges for the nodeToReturn
+                if (subset.getAttributes().size() == 1) {
+                    Leaf decision = new Leaf(subset.mostCommonValue(targetAttr));
+                    Edge edge = new Edge(edgeValue,decision);
+                    edgeList.addFirst(edge);
+                } else {
+                    TreeGenerator<T> subtree = new TreeGenerator<T>(subset);
+                    Edge edge = new Edge(edgeValue,
+                            subtree.buildClassifier(targetAttr));
+                    edgeList.addFirst(edge);
+                }
             }
         }
+        nodeToReturn.values = edgeList;
         return nodeToReturn;
     }
 
@@ -78,6 +86,5 @@ public class TreeGenerator<T extends IAttributeDatum> implements IGenerator {
     @Override
     public void printTree() {
         // TODO: Implement.
-        System.out.println();
     }
 }
