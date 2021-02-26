@@ -64,7 +64,7 @@ public class ListObjsData<T extends IAttributeDatum>
         LinkedList<String> newAttr = new LinkedList<>();
         for (String attr : this.getAttributes()) {
             if (!attr.equals(onAttribute)) {
-                newAttr.addFirst(attr); // change to addFirst & fix tests
+                newAttr.addFirst(attr);
             }
         }
 
