@@ -11,9 +11,8 @@ import java.util.List;
  */
 public class Node implements INode {
     public String attribute;
-    public LinkedList<Edge> values = new LinkedList<>(); // calculated later
-    public Object defaultValue; // default value, after calculation
-    // (mostCommonValue)
+    public LinkedList<Edge> values = new LinkedList<>();
+    public Object defaultValue;
 
     /**
      * Constructor

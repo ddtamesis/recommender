@@ -1,8 +1,6 @@
 package sol;
 
 import src.IAttributeDataset;
-import src.IAttributeDatum;
-import src.INode;
 import tester.Tester;
 
 import java.util.Arrays;
@@ -38,13 +36,12 @@ public class RecommenderTestSuite {
         Vegetable spinach = new Vegetable("green", true, true, false);
         Vegetable kale = new Vegetable("green", true, true, true);
         Vegetable peas = new Vegetable("green", false, true, true);
-//        Vegetable carrot = new Vegetable("orange", false, false, false);
         Vegetable lettuce = new Vegetable("green", true, false, true);
+
         LinkedList<Vegetable> rowsOfVegs = new LinkedList<>();
         rowsOfVegs.addFirst(spinach);
         rowsOfVegs.addFirst(kale);
         rowsOfVegs.addFirst(peas);
-//        rowsOfVegs.addFirst(carrot);
         rowsOfVegs.addFirst(lettuce);
         return rowsOfVegs;
     }
@@ -87,8 +84,7 @@ public class RecommenderTestSuite {
         ListObjsData<Vegetable> dataSet = makeDataSet();
         LinkedList<String> testAttr = new LinkedList<>(Arrays.asList("color",
                 "lowCarb", "highFiber", "likeToEat"));
-        // what is Arrays.asList? I've never seen this--is it smth we're
-        // allowed to use if we never did in class?
+
         t.checkExpect(dataSet.getAttributes(), testAttr);
     }
 
@@ -99,6 +95,7 @@ public class RecommenderTestSuite {
      */
     public void testAllSameValue(Tester t) {
         ListObjsData<Vegetable> dataSet = makeDataSet();
+
         t.checkExpect(dataSet.allSameValue("color"),true);
         t.checkExpect(dataSet.allSameValue("likeToEat"),false);
     }
@@ -111,6 +108,7 @@ public class RecommenderTestSuite {
     public void testSize(Tester t) {
         ListObjsData<Vegetable> dataSet = makeDataSet();
         t.checkExpect(dataSet.size(), 4);
+
         dataSet.rows = new LinkedList<>();
         t.checkExpect(dataSet.size(), 0);
     }
@@ -136,12 +134,10 @@ public class RecommenderTestSuite {
      * @return a first partitioned list of rows
      */
     public static LinkedList<Vegetable> createPartitionedVegs() {
-        Vegetable spinach = new Vegetable("green", true,
-                true, false);
-        Vegetable kale = new Vegetable("green", true,
-                true, true);
-        Vegetable lettuce = new Vegetable("green", true,
-                false, true);
+        Vegetable spinach = new Vegetable("green", true, true, false);
+        Vegetable kale = new Vegetable("green", true, true, true);
+        Vegetable lettuce = new Vegetable("green", true, false, true);
+
         LinkedList<Vegetable> rowsOfVegs = new LinkedList<>();
         rowsOfVegs.addFirst(lettuce);
         rowsOfVegs.addFirst(kale);
@@ -161,8 +157,7 @@ public class RecommenderTestSuite {
 
         LinkedList<Vegetable> partition1 = createPartitionedVegs();
         LinkedList<Vegetable> partition2 = new LinkedList<>();
-        Vegetable peas = new Vegetable("green", false,
-                true, true);
+        Vegetable peas = new Vegetable("green", false, true, true);
         partition2.addFirst(peas);
 
         ListObjsData<Vegetable> resultDataSet1 =
@@ -185,16 +180,13 @@ public class RecommenderTestSuite {
      */
     public void testGetSharedValue(Tester t) {
         ListObjsData<Vegetable> dataSet = makeDataSet();
-        t.checkExpect(dataSet.getSharedValue("color"),
-                "green");
+        t.checkExpect(dataSet.getSharedValue("color"), "green");
 
         LinkedList<IAttributeDataset<Vegetable>> partitionedDataset =
                 dataSet.partition("likeToEat");
-        t.checkExpect(
-                partitionedDataset.get(0).getSharedValue("likeToEat"),
+        t.checkExpect(partitionedDataset.get(0).getSharedValue("likeToEat"),
                 false);
-        t.checkExpect(
-                partitionedDataset.get(1).getSharedValue("likeToEat"),
+        t.checkExpect(partitionedDataset.get(1).getSharedValue("likeToEat"),
                 true);
     }
 
@@ -205,8 +197,8 @@ public class RecommenderTestSuite {
      */
     public void testMostCommonValue(Tester t) {
         ListObjsData<Vegetable> dataSet = makeDataSet();
-        t.checkExpect(dataSet.mostCommonValue("color"),"green");
-        t.checkExpect(dataSet.mostCommonValue("likeToEat"),true);
+        t.checkExpect(dataSet.mostCommonValue("color"), "green");
+        t.checkExpect(dataSet.mostCommonValue("likeToEat"), true);
     }
 
     /**

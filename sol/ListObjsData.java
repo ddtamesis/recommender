@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 /**
  * A class representing a dataset in the form of a data table,
- * using a list of objects for rows
+ * using a list of objects for rows, that implements IAttributeDataset
  *
  * @param <T> - the datum object type that forms the "rows" of the data table
  */
@@ -38,13 +38,14 @@ public class ListObjsData<T extends IAttributeDatum>
     @Override
     public boolean allSameValue(String ofAttribute) {
         int numSameValues = 0;
-        // for loop to check value in each row & increment if matches first value
+
         Object firstValue = this.rows.get(0).getValueOf(ofAttribute);
+
         for (T row : this.rows) {
             if (row.getValueOf(ofAttribute).equals(firstValue)) {
                 numSameValues++;
             }
-        } // if all values same down the column, numSameValues will be the same as # of rows
+        }
         if (numSameValues == this.rows.size()) {
             return true;
         }
@@ -58,9 +59,6 @@ public class ListObjsData<T extends IAttributeDatum>
 
     @Override
     public LinkedList<IAttributeDataset<T>> partition(String onAttribute) {
-        LinkedList<IAttributeDataset<T>> listToReturn = new LinkedList<>();
-        LinkedList<Object> evaluatedVals = new LinkedList<>();
-        // remove onAttribute from listToReturn to make sure we don't use it again
         LinkedList<String> newAttr = new LinkedList<>();
         for (String attr : this.getAttributes()) {
             if (!attr.equals(onAttribute)) {
@@ -68,7 +66,9 @@ public class ListObjsData<T extends IAttributeDatum>
             }
         }
 
-        // nested for loop
+        LinkedList<IAttributeDataset<T>> listToReturn = new LinkedList<>();
+        LinkedList<Object> evaluatedVals = new LinkedList<>();
+
         for (T r1 : rows) {
             Object r1Value = r1.getValueOf(onAttribute);
             if (!evaluatedVals.contains(r1Value)) {

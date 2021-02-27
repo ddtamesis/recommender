@@ -37,7 +37,7 @@ public class BiasTest {
         /**
          * TODO: change this filepath
          */
-        String filepath = "data/train_candidates_unequal.csv";
+        String filepath = "data/train_candidates_correlated.csv";
 
         RecommenderCSVParser<Candidate> parser = new RecommenderCSVParser<Candidate>();
 
@@ -78,13 +78,13 @@ public class BiasTest {
          * "data/testing_cis_male.csv" to "data/testing_cis_male_correlated.csv"
          */
         // parse the male testing dataset
-        newCandMale = (LinkedList<Candidate>) parser.parse(Candidate.class, "data/testing_cis_male.csv", ',', true);
+        newCandMale = (LinkedList<Candidate>) parser.parse(Candidate.class, "data/testing_cis_male_correlated.csv", ',', true);
         // parse the female testing dataset
         /**
          * TODO: While testing correlated variables, change filepath from
          * "data/testing_cis_female.csv" to "data/testing_cis_female_correlated.csv"
          */
-        newCandFemale = (LinkedList<Candidate>) parser.parse(Candidate.class, "data/testing_cis_female.csv", ',', true);
+        newCandFemale = (LinkedList<Candidate>) parser.parse(Candidate.class, "data/testing_cis_female_correlated.csv", ',', true);
 
         // loop to test female and male hiring ratios with the same test files but large
         // number of times

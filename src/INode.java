@@ -4,7 +4,6 @@ package src;
  * A node in the decision tree
  */
 public interface INode {
-    // traverse tree based on attribute values to retrieve decision
 
     /**
      * Traverses a tree based on attribute values to retrieve a decision
@@ -15,6 +14,6 @@ public interface INode {
      */
     public Object lookupDecision(IAttributeDatum attrVals);
 
-    // print tree
+    // print node
     public void printNode(String leadspace);
 }
